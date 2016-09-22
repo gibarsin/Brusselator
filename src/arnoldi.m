@@ -1,17 +1,27 @@
 function [H, Q]=arnoldi(A, q)
   m = size(A,1);
   % preallocate the memmory so as to save vector columns
-  q(:,1) = q/norm(q) % normalize in case it is not
-  for k = 2:m
-    q(:,k) = A * q(:,k-1)
-    for j = 1:k-1
-      h(j, k-1) = q(:,j)' * q(:,k)
-      q(:,k) = q(:,k) - h(j, k-1)
+  v = zeros(m,m);
+  w = zeros(m,m);
+
+  v(:,1) = q/norm(q); % normalize in case it is not
+
+  for j=1:m
+    t = A * v(:,j);
+    w(:,j) = t;
+    for i=1:j
+      a = v(:,i);
+      h(i,j) = a' * t;
+      w(:,j) = w(:,j) - h(i,j) * a;
     end
-    h(k, k-1) = norm(q(:,k))
-    q(:,k) = q(:,k)/h(k, k-1)
+    aux = norm(w(:,j));
+    if aux == 0
+      break;
+    end
+    h(j+1,j) = aux;
+    v(:,j+1) = w(:,j)/h(j+1,j);
   end
 
+  Q = v;
   H = h;
-  Q = q;
-endfunction
+end
