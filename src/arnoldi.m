@@ -1,4 +1,4 @@
-function [H, Q]=arnoldi(A, q)
+function [H, V]=arnoldi(A, q)
   m = size(A,1);
   % preallocate the memmory so as to save vector columns
   v = zeros(m,m);
@@ -13,13 +13,15 @@ function [H, Q]=arnoldi(A, q)
       w = w - h(i,j) * a;
     end
     aux = norm(w);
-    if aux == 0
+    if abs(aux) < 1e-6 || j == m
+      % j == m can be reach due to the error introduced by the iterations
+      % this condition cannot be reached as it would cause H and Q not to be square
       break;
     end
     h(j+1,j) = aux;
     v(:,j+1) = w/h(j+1,j);
   end
 
-  Q = v;
+  V = v;
   H = h;
 end
