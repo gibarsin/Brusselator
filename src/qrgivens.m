@@ -3,22 +3,22 @@
  
  function [Q,R] = qrgivens(A)
  
-   [rows, cols] = size(A)
+   [rows, cols] = size(A);
    
-   Q = eye(rows)
+   Q = eye(rows);
    
-   R = A
+   R = A;
    
-   for j=1:cols do
+   for j=1:cols
    
-    for i=rows:-1:j+1 do
+    for i=rows:-1:j+1
     
-      [c, s] = givensrotationmatrix(A(i-1, j), A(i, j))
+      [c, s] = givensrotationmatrix(R(i-1, j), R(i, j));
       
-      G = eye(rows)
-      G( [i-1, i], [i-1, i]) = [ c -s; s c]
-      R = transpose(G) * R
-      Q = Q * G
+      G = eye(rows);
+      G( [i-1, i], [i-1, i]) = [ c -s; s c];
+      R = transpose(G) * R;
+      Q = Q * G;
       
     end
    
