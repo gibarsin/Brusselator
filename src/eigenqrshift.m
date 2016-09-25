@@ -1,3 +1,9 @@
+% Code is based on
+% Program 3.6 of "Computational Methods in Engineering"
+% by S.P. Venkateshan, P. Swaminathan,
+% Academic Press, 2014
+%
+% Modifications were made to fit our needs and limitations
 function [eigen,count] = eigenqrshift(A)
   n = length(A);
   % get B, the hessenberg matrix returned by the arnoldi method
