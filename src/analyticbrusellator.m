@@ -25,7 +25,7 @@ function ans=analyticbrusellator(m, L, d1, d2, alpha, beta)
     coeff(3) =  beta * alpha**2 + tau1 * tau2 * eigOfT(j)**2 + ...
                 tau2 * (beta - 1) * eigOfT(j) - ...
                 alpha**2 * tau1 * eigOfT(j) - alpha**2 * (beta - 1);
-    d = roots(coeff);
+    d = roots2(coeff);
     % eigenvalues of A
     eigOfA(j) = d(1);
     eigOfA(m+j) = d(2);
