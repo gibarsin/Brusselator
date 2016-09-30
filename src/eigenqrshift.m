@@ -25,14 +25,16 @@ function [eigen,count] = eigenqrshift(A)
     % what variant of the QR shifting method to use at this current step:
     % - Francis (discr < 0) => for complex eigenvalues
     % - Wilkinson (discr >= 0) => for real eigenvalues
-    Tr = trace(A1);
-    D = det(A1);
+    Tr = trace_own(A1);
+    D = det2(A1);
     count = count + 1;
     discr = Tr ^ 2 - 4 * D;
     if  discr < 0 % use Francis QR method step
       M = B * B - Tr * B + D * eye(n1);
+
        [Z,R] = qrgivens(M); % +++xown
       %[Z,R] = qr(M); % +++xown
+
       B = Z' * B * Z;
     else % use Wilkinson QR method step
       e = eig2(A1);
@@ -42,8 +44,10 @@ function [eigen,count] = eigenqrshift(A)
       d = min (d1, d2);
       I = eye(n1);
       B = B - d*I;
+
        [Q,R] = qrhessenberg(B); % +++xown
       %[Q,R] = qr(B); % +++xown
+
       B = R*Q + d*I;
     end
 
