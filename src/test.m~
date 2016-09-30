@@ -1,0 +1,25 @@
+function [ret a b]=test(m)
+	a=time;
+	an = analytic(m, 0.51302, 0.008, 0.004, 2, 5.45)';
+	b=time;
+	disp("Time analytic:");
+	disp(b-a);
+	ret(1)=b-a;
+	A = getMatrix(m, 0.51302, 0.008, 0.004, 2, 5.45);
+	a=time;
+	[me, count] = eigenqrshift(A);
+	b=time;
+	disp("Time numeric:");
+	disp(b-a);
+	ret(2)=b-a;
+	an=sort(an);
+	me=sort(me);
+	diff = abs(an-me);
+	ret(3)=mean(diff);
+	disp("Mean:");
+	disp(ret(3));
+	ret(4)=std(diff);
+	disp("Standart desviation:");
+	disp(ret(4));
+	ret=ret';
+endfunction
